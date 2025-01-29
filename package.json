@@ -17,6 +17,7 @@
   "homepage": "https://github.com/DavideCicoria/5C_Cicoria_TodoNode#readme",
   "description": "",
   "dependencies": {
-    "bootstrap": "^5.3.3"
+    "bootstrap": "^5.3.3",
+    "express": "^4.21.2"
   }
 }
