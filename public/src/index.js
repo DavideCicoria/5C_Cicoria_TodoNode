@@ -8,8 +8,9 @@ const todoList = generateTodoListComponent(document.getElementById('todoListDiv'
 let todos ;
 todoList.load()
 .then((json) => {
-    todoList.setTodos(json.todos);
-    console.log(json.todos) ;
+    todos = json.todos;
+    todoList.setTodos(todos);
+    console.log(todos) ;
     todoList.render();
 });
 

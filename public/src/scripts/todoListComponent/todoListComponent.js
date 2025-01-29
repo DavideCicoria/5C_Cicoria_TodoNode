@@ -6,7 +6,7 @@ export const generateTodoListComponent = (parentElement) => {
         setTodos: (setTodos) => {
             todos = setTodos ;
         },
-        render: function() {
+        render: () => {
             let html = '<table class="table"><tbody>' ;
 
             if (todos.length !== 0) {
@@ -22,9 +22,9 @@ export const generateTodoListComponent = (parentElement) => {
             html += '</tbody></table>' ;
             parentElement.innerHTML = html ;
 
-            document.querySelectorAll(".elimina").forEach(function(element, index) {
+            document.querySelectorAll(".elimina").forEach((element, index) => {
                 console.log(element) ;
-                element.onclick = function() {
+                element.onclick = () => {
                     console.log("elimina") ;
                     this.deleteTodo(todos[index].name) ;
 
@@ -38,9 +38,9 @@ export const generateTodoListComponent = (parentElement) => {
                 }
             });
 
-            document.querySelectorAll(".completa").forEach(function(element, index) {
+            document.querySelectorAll(".completa").forEach((element, index) => {
                 console.log(element) ;
-                element.onclick = function() {
+                element.onclick = () => {
                     console.log("completa") ;
                     document.getElementById("todo" + index).classList.remove("active") ;
                     document.getElementById("todo" + index).classList.add("completed") ;
@@ -84,7 +84,7 @@ export const generateTodoListComponent = (parentElement) => {
                 })
             })
         },
-        completeTodo: function(todo) {
+        completeTodo: (todo) => {
             return new Promise((resolve, reject) => {
                 fetch("/todo/complete", {
                     method: 'PUT',
@@ -99,7 +99,7 @@ export const generateTodoListComponent = (parentElement) => {
                })
             })
         },
-        deleteTodo: function(id) {
+        deleteTodo: (id) => {
             return new Promise((resolve, reject) => {
                 fetch("/todo/" + id, {
                     method: "DELETE",
