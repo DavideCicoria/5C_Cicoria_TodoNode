@@ -28,7 +28,7 @@ export const generateTodoListComponent = (parentElement) => {
                     console.log("elimina") ;
                     this.deleteTodo(todos[index].name) ;
 
-                    console.log(deleteTodo) ;
+                    //console.log(deleteTodo) ;
 
                     this.load()
                     .then((r) => {
@@ -44,10 +44,9 @@ export const generateTodoListComponent = (parentElement) => {
                     console.log("completa") ;
                     document.getElementById("todo" + index).classList.remove("active") ;
                     document.getElementById("todo" + index).classList.add("completed") ;
-
+                    
                     this.completeTodo(todos[index].name) ;
-                    console.log(completeTodo) ;
-                    console.log("this:", this); // Controlla cosa rappresenta `this`
+                    //console.log(completeTodo) ;
 
                     this.load()
                     .then((r) => {
@@ -62,11 +61,9 @@ export const generateTodoListComponent = (parentElement) => {
             return new Promise((resolve, reject) => {
                 fetch("/todo/add", {
                     method: "POST",
-      
                     headers: {
                         "Content-Type": "application/json",
                     },
-      
                     body: JSON.stringify(todo),
                 })
                 .then((response) => response.json())

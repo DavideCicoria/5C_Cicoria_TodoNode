@@ -32,7 +32,6 @@ form.onsubmit((todo) => {
 setInterval(() => {
     todoList.load().then((json) => {
         todoList.setTodos(json.todos);
-        //todoList.value = "";
         todoList.render();
   });
   }, 30000);
