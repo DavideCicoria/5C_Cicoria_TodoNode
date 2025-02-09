@@ -10,7 +10,7 @@ todoList.load()
 .then((json) => {
     todos = json.todos;
     todoList.setTodos(todos);
-    console.log(todos) ;
+    //console.log(todos) ;
     todoList.render();
 });
 

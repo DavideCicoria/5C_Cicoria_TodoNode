@@ -17,7 +17,12 @@
   "homepage": "https://github.com/DavideCicoria/5C_Cicoria_TodoNode#readme",
   "description": "",
   "dependencies": {
+    "body-parser": "^1.20.3",
     "bootstrap": "^5.3.3",
-    "express": "^4.21.2"
+    "express": "^4.21.2",
+    "fs": "^0.0.1-security",
+    "http": "^0.0.1-security",
+    "mysql2": "^3.12.0",
+    "path": "^0.12.7"
   }
 }

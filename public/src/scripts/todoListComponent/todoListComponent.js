@@ -1,63 +1,68 @@
 export const generateTodoListComponent = (parentElement) => {
     //let todos = [{"todo": "test", "status": "active"}] ;
-    let todos = [] ;
+    let todos = [];
 
     return {
-        setTodos: (setTodos) => {
-            todos = setTodos ;
+        setTodos: function (setTodos) {
+            todos = setTodos;
         },
-        render: () => {
-            let html = '<table class="table"><tbody>' ;
+        render: function () {
+            let html = '<table class="table"><tbody>';
 
             if (todos.length !== 0) {
                 todos.forEach((element, index) => {
-                    html += '<tr><td>' + '<span id="todo' + index + '" class="active">' + element.name + '</span>' + 
-                    '</td><td><button type="button" id="conferma' + index +'" class="btn btn-success completa">COMPLETA</button>' +
-                    '</td><td><button type="button" id="elimina' + index +'" class="btn btn-danger elimina">ELIMINA</button>' + '</td></tr>' ;
-                }) ;
+                    console.log(element)
+                    if (!element.completed) {
+                        html += '<tr><td>' + '<span id="todo' + index + '">' + element.name + '</span>' +
+                            '</td><td><button type="button" id="conferma' + index + '" class="btn btn-success completa">COMPLETA</button>' +
+                            '</td><td><button type="button" id="elimina' + index + '" class="btn btn-danger elimina">ELIMINA</button>' + '</td></tr>';
+                    } else {
+                        html += '<tr><td>' + '<span id="todo' + index + '" class="active">' + element.name + '</span>' +
+                            '</td><td><button type="button" id="conferma' + index + '" class="btn btn-success completa">COMPLETA</button>' +
+                            '</td><td><button type="button" id="elimina' + index + '" class="btn btn-danger elimina">ELIMINA</button>' + '</td></tr>';
+                    }
+                })
             } else {
-                html = "Non ci sono ancora delle attivita'. Aggiungine di nuove per gestirle!" ;
+                html = "Non ci sono ancora delle attivita'. Aggiungine di nuove per gestirle!";
             }
 
-            html += '</tbody></table>' ;
-            parentElement.innerHTML = html ;
+            html += '</tbody></table>';
+            parentElement.innerHTML = html;
 
             document.querySelectorAll(".elimina").forEach((element, index) => {
-                console.log(element) ;
-                element.onclick = () => {
-                    console.log("elimina") ;
-                    this.deleteTodo(todos[index].name) ;
+                //(element);
+                element.onclick = async () => {
+                    //console.log("elimina");
+                    await this.deleteTodo(todos[index].id);
 
                     //console.log(deleteTodo) ;
 
                     this.load()
-                    .then((r) => {
-                        this.setData(r.todos);
-                        this.render();
-                    });
+                        .then((r) => {
+                            this.setTodos(r.todos);
+                            this.render();
+                        });
                 }
             });
 
             document.querySelectorAll(".completa").forEach((element, index) => {
-                console.log(element) ;
-                element.onclick = () => {
-                    console.log("completa") ;
-                    document.getElementById("todo" + index).classList.remove("active") ;
-                    document.getElementById("todo" + index).classList.add("completed") ;
-                    
-                    this.completeTodo(todos[index].name) ;
+                //console.log(element);
+                element.onclick = async () => {
+                    //   console.log("completa");
+
+                    await this.completeTodo(todos[index]);
                     //console.log(completeTodo) ;
 
                     this.load()
-                    .then((r) => {
-                        this.setData(r.todos) ;
-                        console.log(r.todos) ;
-                        this.render() ;
-                    });
+                        .then((r) => {
+                            this.setTodos(r.todos);
+                            //     console.log(r.todos);
+                            this.render();
+                        });
                 }
             });
         },
-        send: (todo) => {
+        send: function (todo) {
             return new Promise((resolve, reject) => {
                 fetch("/todo/add", {
                     method: "POST",
@@ -66,22 +71,22 @@ export const generateTodoListComponent = (parentElement) => {
                     },
                     body: JSON.stringify(todo),
                 })
-                .then((response) => response.json())
-                .then((json) => {
-                    resolve(json); // risposta del server all'aggiunta
-                });
+                    .then((response) => response.json())
+                    .then((json) => {
+                        resolve(json); // risposta del server all'aggiunta
+                    });
             });
         },
-        load: () => {
+        load: function () {
             return new Promise((resolve, reject) => {
                 fetch("/todo")
-                .then((response) => response.json())
-                .then((json) => {
-                    resolve(json); // risposta del server con la lista
-                })
+                    .then((response) => response.json())
+                    .then((json) => {
+                        resolve(json); // risposta del server con la lista
+                    })
             })
         },
-        completeTodo: (todo) => {
+        completeTodo: function (todo) {
             return new Promise((resolve, reject) => {
                 fetch("/todo/complete", {
                     method: 'PUT',
@@ -90,13 +95,13 @@ export const generateTodoListComponent = (parentElement) => {
                     },
                     body: JSON.stringify(todo)
                 })
-                .then((response) => response.json())
-                .then((json) => {
-                    resolve(json);
-               })
+                    .then((response) => response.json())
+                    .then((json) => {
+                        resolve(json);
+                    })
             })
         },
-        deleteTodo: (id) => {
+        deleteTodo: function (id) {
             return new Promise((resolve, reject) => {
                 fetch("/todo/" + id, {
                     method: "DELETE",
@@ -104,10 +109,10 @@ export const generateTodoListComponent = (parentElement) => {
                         "Content-Type": "application/json",
                     },
                 })
-                .then((response) => response.json())
-                .then((json) => {
-                    resolve(json);
-                });
+                    .then((response) => response.json())
+                    .then((json) => {
+                        resolve(json);
+                    });
             });
         },
     }

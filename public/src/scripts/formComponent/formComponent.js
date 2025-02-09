@@ -28,7 +28,7 @@ export const generateFormComponent = (parentElement) => {
                 if (textField.value !== "") {
                     let newTodo = {
                         name: textField.value,
-                        completed: "false"
+                        completed: false
                     }
                     submitCallback(newTodo) ;
                     textField.value = "" ;
